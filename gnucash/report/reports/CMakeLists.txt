@@ -33,6 +33,7 @@ set (reports_standard_SCHEME
     standard/dashboard.scm
     standard/equity-statement.scm
     standard/general-journal.scm
+    standard/general-journal-term.scm
     standard/general-ledger.scm
     standard/ifrs-cost-basis.scm
     standard/income-gst-statement.scm

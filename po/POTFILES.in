@@ -476,6 +476,7 @@ gnucash/report/reports/standard/customer-summary.scm
 gnucash/report/reports/standard/dashboard.scm
 gnucash/report/reports/standard/equity-statement.scm
 gnucash/report/reports/standard/general-journal.scm
+gnucash/report/reports/standard/general-journal-term.scm
 gnucash/report/reports/standard/general-ledger.scm
 gnucash/report/reports/standard/ifrs-cost-basis.scm
 gnucash/report/reports/standard/income-gst-statement.scm
