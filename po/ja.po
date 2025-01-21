@@ -4981,6 +4981,10 @@ msgstr "株式アシスタント"
 msgid "General Journal"
 msgstr "一般仕訳帳"
 
+#: gnucash/report/reports/standard/general-journal-term.scm:36
+msgid "Periodic General Journal"
+msgstr "期間一般仕訳帳"
+
 #. Translators: %s is the name
 #. of the tab page
 #: gnucash/gnome/gnc-plugin-page-register.cpp:1878

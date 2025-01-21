@@ -33,7 +33,7 @@
 (use-modules (gnucash app-utils))
 (use-modules (gnucash report))
 
-(define reportname (N_ "General Term Journal"))
+(define reportname (N_ "Periodic General Journal"))
 (define regrptname (N_ "Register"))
 (define regrptguid "22104e02654c4adba844ee75a3f8d173")
 (define optname-from-date (N_ "Start Date"))
