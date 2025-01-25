@@ -53,6 +53,10 @@
       gnc:pagename-display (N_ "Use Short Account Name")
       "ga" (G_ "Display the short account name?") #f)
 
+    (gnc-register-simple-boolean-option options
+      gnc:pagename-display (N_ "Disable links")
+      "ka" (G_ "Disable hyperlinks in amounts.") #f)
+
     ;; set the "__reg" options required by the Register Report...
     (for-each
      (lambda (l)
@@ -80,6 +84,7 @@
       (list (N_ "Shares") #f)
       (list (N_ "Price") #f)
       ;; note the "Amount" multichoice option here
+      (list (N_ "Disable links") #t)
       (list (N_ "Amount") 'double)
       (list (N_ "Running Balance") #f)
       (list (N_ "Totals") #f)))

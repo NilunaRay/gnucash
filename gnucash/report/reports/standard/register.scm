@@ -165,7 +165,7 @@
 
 (define (add-split-row table split column-vector row-style transaction-info?
                        split-info? action-for-num? ledger-type? double? memo?
-                       description? total-collector account-fullname?)
+                       description? total-collector account-fullname? links?)
   (let* ((row-contents '())
          (parent (xaccSplitGetParent split))
          (account (xaccSplitGetAccount split))
@@ -176,6 +176,9 @@
          (dvalue (xaccSplitGetValue split))
          (split-abs-amount (gnc:make-gnc-monetary currency (abs damount)))
          (split-abs-value (gnc:make-gnc-monetary trans-currency (abs dvalue))))
+
+    (define (make-amount-cell split text)
+      (if links? (gnc:html-split-anchor split text) text))
 
     (if (date-col column-vector)
         (addto! row-contents
@@ -237,7 +240,7 @@
                 (and split-info?
                      (gnc:make-html-table-cell/markup
                       "number-cell"
-                      (gnc:html-split-anchor
+                      (make-amount-cell
                        split (gnc:make-gnc-monetary
                               currency (if reverse? (- damount) damount)))))))
     (if (debit-col column-vector)
@@ -245,13 +248,13 @@
                 (and split-info? (positive? damount)
                      (gnc:make-html-table-cell/markup
                       "number-cell"
-                      (gnc:html-split-anchor split split-abs-amount)))))
+                      (make-amount-cell split split-abs-amount)))))
     (if (credit-col column-vector)
         (addto! row-contents
                 (and split-info? (not (positive? damount))
                      (gnc:make-html-table-cell/markup
                       "number-cell"
-                      (gnc:html-split-anchor split split-abs-amount)))))
+                      (make-amount-cell split split-abs-amount)))))
     (if (value-single-col column-vector)
         (addto! row-contents
                 (and split-info?
@@ -277,7 +280,7 @@
                 (if transaction-info?
                     (gnc:make-html-table-cell/markup
                      "number-cell"
-                     (gnc:html-split-anchor
+                     (make-amount-cell
                       split
                       (gnc:make-gnc-monetary
                        currency
@@ -424,6 +427,8 @@
     (opt-val "Display" "Totals"))
   (define (reg-report-account-shortname?)
     (opt-val "Display" "Use Short Account Name"))
+  (define (reg-report-links?)
+    (not (opt-val "Display" "Disable links")))
 
   (define (add-subtotal-row label leader table used-columns
                             subtotal-collector subtotal-style
@@ -516,7 +521,8 @@
          (work-to-do (length splits))
          (action-for-num? (qof-book-use-split-action-for-num-field
                            (gnc-get-current-book)))
-         (account-shortname? (reg-report-account-shortname?)))
+         (account-shortname? (reg-report-account-shortname?))
+         (links? (reg-report-links?)))
 
     (gnc:html-table-set-col-headers!
      table
@@ -590,14 +596,14 @@
                          action-for-num?  ledger-type?
                          double? (opt-val "Display" "Memo")
                          (opt-val "Display" "Description")
-                         total-collector account-shortname?)
+                         total-collector account-shortname? links?)
           (when multi-rows?
             (for-each
              (lambda (split)
                (add-split-row table split used-columns "alternate-row"
                               #f #t action-for-num? ledger-type? #f
                               (opt-val "Display" "Memo")
-                              (opt-val "Display" "Description") total-collector account-shortname?))
+                              (opt-val "Display" "Description") total-collector account-shortname? links?))
              (xaccTransGetSplitList (xaccSplitGetParent current))))
 
           (loop (cdr splits)
