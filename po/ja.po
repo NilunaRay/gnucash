@@ -24844,6 +24844,16 @@ msgstr "運用中の残高"
 msgid "Totals"
 msgstr "合計"
 
+#: gnucash/report/reports/standard/general-journal-term.scm:53
+#: gnucash/report/reports/standard/general-journal-term.scm:79
+#: gnucash/report/reports/standard/register.scm:426
+msgid "Use Short Account Name"
+msgstr "短い勘定科目名を使用する"
+
+#: gnucash/report/reports/standard/general-journal-term.scm:54
+msgid "Display the short account name?"
+msgstr "短い勘定科目を表示するかどうかを指定します。"
+
 #: gnucash/report/reports/standard/general-ledger.scm:39
 msgid "General Ledger"
 msgstr "総勘定元帳"

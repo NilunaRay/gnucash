@@ -165,7 +165,7 @@
 
 (define (add-split-row table split column-vector row-style transaction-info?
                        split-info? action-for-num? ledger-type? double? memo?
-                       description? total-collector)
+                       description? total-collector account-fullname?)
   (let* ((row-contents '())
          (parent (xaccSplitGetParent split))
          (account (xaccSplitGetAccount split))
@@ -208,9 +208,9 @@
                  "text-cell"
                  (cond
                   ((not split-info?) #f)
-                  ((not transaction-info?) (gnc-account-get-full-name account))
+                  ((not transaction-info?) ((if (not account-fullname?) gnc-account-get-full-name xaccAccountGetName) account))
                   (else (case (xaccTransCountSplits (xaccSplitGetParent split))
-                          ((2) (gnc-account-get-full-name
+                          ((2) ((if (not account-fullname?) gnc-account-get-full-name xaccAccountGetName)
                                 (xaccSplitGetAccount
                                  (xaccSplitGetOtherSplit split))))
                           ((1) (G_ "None"))
@@ -422,6 +422,8 @@
     (opt-val "__reg" "double"))
   (define (reg-report-show-totals?)
     (opt-val "Display" "Totals"))
+  (define (reg-report-account-shortname?)
+    (opt-val "Display" "Use Short Account Name"))
 
   (define (add-subtotal-row label leader table used-columns
                             subtotal-collector subtotal-style
@@ -513,7 +515,8 @@
          (credit-value (gnc:make-commodity-collector))
          (work-to-do (length splits))
          (action-for-num? (qof-book-use-split-action-for-num-field
-                           (gnc-get-current-book))))
+                           (gnc-get-current-book)))
+         (account-shortname? (reg-report-account-shortname?)))
 
     (gnc:html-table-set-col-headers!
      table
@@ -587,14 +590,14 @@
                          action-for-num?  ledger-type?
                          double? (opt-val "Display" "Memo")
                          (opt-val "Display" "Description")
-                         total-collector)
+                         total-collector account-shortname?)
           (when multi-rows?
             (for-each
              (lambda (split)
                (add-split-row table split used-columns "alternate-row"
                               #f #t action-for-num? ledger-type? #f
                               (opt-val "Display" "Memo")
-                              (opt-val "Display" "Description") total-collector))
+                              (opt-val "Display" "Description") total-collector account-shortname?))
              (xaccTransGetSplitList (xaccSplitGetParent current))))
 
           (loop (cdr splits)

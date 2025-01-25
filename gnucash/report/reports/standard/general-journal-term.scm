@@ -49,6 +49,10 @@
       (GncOption-set-default-value
        (gnc-lookup-option (gnc:optiondb options) section name) value))
 
+    (gnc-register-simple-boolean-option options
+      gnc:pagename-display (N_ "Use Short Account Name")
+      "ga" (G_ "Display the short account name?") #f)
+
     ;; set the "__reg" options required by the Register Report...
     (for-each
      (lambda (l)
@@ -72,6 +76,7 @@
           (list (N_ "Num") #f))
       (list (N_ "Description") #t)
       (list (N_ "Account") #t)
+      (list (N_ "Use Short Account Name") #f)
       (list (N_ "Shares") #f)
       (list (N_ "Price") #f)
       ;; note the "Amount" multichoice option here
