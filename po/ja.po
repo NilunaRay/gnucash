@@ -28321,6 +28321,10 @@ msgstr "前期繰越"
 msgid "Split Transaction"
 msgstr "スプリット取引"
 
+#: gnucash/report/trep-engine.scm:1748
+msgid "Sundries"
+msgstr "諸口"
+
 #: gnucash/report/trep-engine.scm:2029
 msgid "CSV disabled for double column amounts"
 msgstr "2 列の金額では CSV は無効です"

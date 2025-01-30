@@ -1805,7 +1805,7 @@ be excluded from periodic reporting.")
                                 show-account-name? show-account-full-name?)
       ;;# on multi-line splits we can get an empty ('()) account
       (if (null? account)
-          (G_ "Split Transaction")
+          (if show-account-full-name? (G_ "Split Transaction") (G_ "Sundries"))
           (with-output-to-string
             (lambda ()
               (when show-account-code?
